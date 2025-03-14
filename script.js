@@ -1,96 +1,135 @@
-let MainWraper = document.getElementById("MainWraper");
-let Overlay = document.getElementById("overlay");
-let Conentpost = document.getElementById("ContentPost");
-let CloseIcon = document.getElementById("close");
-let AddPost = document.getElementById("AddPost");
-let OverLayadd = document.getElementById("overlayadd");
-let FormTag = document.getElementById("FormTag");
+const ArrowLeft = document.getElementById("arrowLeft");
+const ArrowRight = document.getElementById("arrowRight");
+const MainContent = document.getElementById("SliderContent");
+let sliderIndex = 0;
 
-function ajaxPost(url) {
-  fetch(url, {
-    method: "GET",
-  })
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (responseData) {
-      responseData.forEach((element) => {
-        CreatePostDiv(element);
-      });
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+const dataArray = [
+  {
+    id: 1,
+    imgUrl:
+      "https://images.pexels.com/photos/2325447/pexels-photo-2325447.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    title: "image tite 1",
+  },
+  {
+    id: 2,
+    imgUrl:
+      "https://thumbs.dreamstime.com/z/majestic-scene-beautiful-hot-air-balloon-drifting-over-marvellous-picturesque-landscape-unique-perspective-world-s-beauty-343696591.jpg",
+    title: "image title 2",
+  },
+  {
+    id: 3,
+    imgUrl:
+      "https://images.pexels.com/photos/2325447/pexels-photo-2325447.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    title: "image tite 3",
+  },
+  {
+    id: 4,
+    imgUrl:
+      "https://thumbs.dreamstime.com/z/majestic-scene-beautiful-hot-air-balloon-drifting-over-marvellous-picturesque-landscape-unique-perspective-world-s-beauty-343696591.jpg",
+    title: "image tite 4",
+  },
+];
+function DivTag() {
+  const divEl = document.createElement("div");
+  return divEl;
 }
-ajaxPost("https://jsonplaceholder.typicode.com/posts");
-
-function CreatePostDiv(item) {
-  let divEl = document.createElement("div");
-  divEl.classList.add("PostContainer");
-  divEl.setAttribute("dataId", item.id);
-
-  let title1 = document.createElement("h3");
-  let title2 = document.createElement("h2");
-  let Btn = document.createElement("button");
-  Btn.setAttribute("btnId", item.id);
-
-  title1.textContent = `ID:${item.id}`;
-  title2.textContent = `Title:${item.title}`;
-  Btn.textContent = "Delete This Post";
-
-  divEl.addEventListener("click", function () {
-    Overlay.classList.add("active");
-    let NewId = this.getAttribute("dataId");
-    let OtherNewLink = `https://jsonplaceholder.typicode.com/posts/${NewId}`;
-    console.log(OtherNewLink);
-    fetch(OtherNewLink)
-      .then((response) => response.json())
-      .then((newData) => {
-        let pDescr = document.createElement("p");
-        pDescr.textContent = newData.body;
-        Conentpost.appendChild(pDescr);
-      });
-  });
-  CloseIcon.addEventListener("click", function () {
-    Overlay.classList.remove("active");
-    Conentpost.innerHTML = " ";
-  });
-  Btn.addEventListener("click", function (event) {
-    event.stopPropagation();
-    let deletebtn = this.getAttribute("btnId");
-    let NewLink = `https://jsonplaceholder.typicode.com/posts/${deletebtn}`;
-    fetch(NewLink, {
-      method: "DELETE",
-    }).then(() => divEl.remove());
-  });
-  divEl.appendChild(title1);
-  divEl.appendChild(title2);
-  divEl.appendChild(Btn);
-
-  MainWraper.appendChild(divEl);
+function ImgTag(item) {
+  const tagEl = document.createElement("img");
+  tagEl.src = item.imgUrl;
+  return tagEl;
 }
+function titleTag(item) {
+  const titleEl = document.createElement("h2");
+  titleEl.textContent = item.title;
+  return titleEl;
+}
+function setSlider() {
+  MainContent.innerHTML = " ";
+  const slideItem = DivTag();
+  const imgItem = ImgTag(dataArray[sliderIndex]);
+  const titleItem = titleTag(dataArray[sliderIndex]);
 
-AddPost.addEventListener("click", function () {
-  OverLayadd.classList.add("activeOverlayadd");
+  slideItem.appendChild(imgItem);
+  slideItem.appendChild(titleItem);
+  MainContent.appendChild(slideItem);
+}
+setSlider();
+
+function LeftArrow() {
+  if (sliderIndex === 0) {
+    sliderIndex = dataArray.length - 1;
+    setSlider();
+    return;
+  }
+  sliderIndex--;
+  setSlider();
+}
+function RightArrow() {
+  if (sliderIndex === dataArray.length - 1) {
+    sliderIndex = 0;
+    setSlider();
+    return;
+  }
+  sliderIndex++;
+  setSlider();
+}
+ArrowLeft.addEventListener("click", LeftArrow);
+ArrowRight.addEventListener("click", RightArrow);
+
+setInterval(() => {
+  RightArrow();
+}, 4000);
+
+const FormEl = document.getElementById("formElement");
+
+FormEl.addEventListener("submit", function (event) {
+  event.preventDefault();
+  let errors = {};
+  const UsernameValue = document.getElementById("UserNameField").value;
+  if (UsernameValue == "") {
+    errors.usernmae = "username Field Cannot be Empty";
+  }
+  const Password1 = document.getElementById("PasswordField").value;
+  const Password2 = document.getElementById("repeateyourField").value;
+  if (Password1 == "") {
+    errors.password = "password Field Cannot be Empty";
+  }
+  if (Password1 !== Password2) {
+    errors.Password2 = "Passwords do not match";
+  }
+  let gender = false;
+
+  this.querySelectorAll('[name="gender"]').forEach((item) => {
+    if (item.checked) {
+      gender = true;
+    }
+  });
+  if (!gender) {
+    errors.gender = "please select your Gender";
+  }
+  const CheckBox = document.getElementById("agreeCheck").checked;
+  if (CheckBox === false) {
+    errors.check = "you must agree our conditions";
+  }
+  console.log(errors);
+
+  this.querySelectorAll(".errorText").forEach((el) => {
+    el.textContent = " ";
+  });
+
+  for (let key in errors) {
+    console.log(key);
+
+    let perrorElement = document.getElementById("errors-" + key);
+    console.log(perrorElement);
+    if (perrorElement) {
+      perrorElement.textContent = errors[key];
+    }
+  }
 });
-FormTag.addEventListener("submit", function (ev) {
-  ev.preventDefault();
-  console.log(this[0].value);
-  fetch("https://jsonplaceholder.typicode.com/posts", {
-    method: "POST",
-    body: JSON.stringify({
-      title: this[0].value,
-      userId: 11,
-    }),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  })
-    .then((response) => response.json())
-    .then((json) => {
-      OverLayadd.classList.remove("activeOverlayadd");
-      this[0].value = " ";
-      CreatePostDiv(json);
-      console.log(json);
-    });
-});
+let errors = {
+  check: "you must agree our conditions",
+  gender: "please select your Gender",
+  password: "password Field Cannot be Empty",
+  usernmae: "username Field Cannot be Empty",
+};

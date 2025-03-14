@@ -1,50 +1,30 @@
-.PostContainer {
-  max-width: 700px;
-  width: 100%;
-  height: 70px;
-  background-color: lightslategray;
-  color: #fff;
-  margin-bottom: 25px;
-}
-.overlay {
-  display: none;
-}
-.overlay.active {
-  display: block;
-  width: 400px;
-  height: 400px;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+.arrow {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   background-color: lightblue;
-}
-.close {
-  color: red;
+  color: black;
+  cursor: pointer;
+  font-size: 35px;
   position: absolute;
-  font-size: 40px;
-  top: 25px;
-  right: 25px;
-  cursor: pointer;
-}
-.addPost {
-  position: fixed;
-  top: 25px;
-  right: 25px;
-  font-size: 50px;
-  cursor: pointer;
-}
-.overlayadd {
-  display: none;
-}
-.overlayadd.activeOverlayadd {
-  display: block;
-  width: 400px;
-  height: 400px;
-  position: fixed;
-  left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: blueviolet;
-  padding: 50px;
+  transform: translateY(-50%);
+  border: none;
+}
+.SliderWraper {
+  position: relative;
+}
+.left {
+  left: 25px;
+}
+.right {
+  right: 25px;
+}
+img {
+  width: 100%;
+  height: 700px;
+  object-fit: cover;
+}
+.errorText {
+  color: red;
 }

@@ -9,22 +9,42 @@
   </head>
   <body>
     <section>
-      <h3>Posts Example</h3>
-      <div class="MainWraper" id="MainWraper"></div>
-      <div class="overlay" id="overlay">
-        <div class="contentPost" id="ContentPost"></div>
-        <div class="close" id="close">X</div>
-      </div>
+      <form action="" id="formElement">
+        <div>
+          <input type="text" name="usernmae" id="UserNameField" />
+          <p class="errorText" id="errors-usernmae"></p>
+        </div>
+        <div>
+          <input type="password" name="password" id="PasswordField" />
+          <p class="errorText" id="errors-password"></p>
+        </div>
+        <div>
+          <input type="password" name="repeatPaswword" id="repeateyourField" />
+          <p class="errorText" id="errors-repeatPaswword"></p>
+        </div>
+        <div>
+          <input type="radio" name="gender" id="male" />
+          <label for="">Male</label>
+          <input type="radio" name="gender" id="Female" />
+          <label for="">FeMale</label>
+          <p class="errorText" id="errors-gender"></p>
+        </div>
+        <div>
+          <input type="checkbox" name="check" id="agreeCheck" />
+          <label for="">agree terms and conditions</label>
+          <p class="errorText" id="errors-check"></p>
+        </div>
+        <button>submit</button>
+      </form>
     </section>
     <section>
-      <div class="addPost" id="AddPost">+</div>
-      <div class="overlayadd" id="overlayadd">
-        <form action="" id="FormTag">
-          <input type="text" id="titlePost" name="Post" />
-          <button>პოსტის დამატება</button>
-        </form>
+      <div class="SliderWraper">
+        <button class="arrow left" id="arrowLeft"><</button>
+        <button class="arrow right" id="arrowRight">></button>
+        <div class="slider-Content" id="SliderContent"></div>
       </div>
     </section>
+
     <script src="script.js"></script>
   </body>
 </html>
