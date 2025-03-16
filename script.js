@@ -1,34 +1,36 @@
-const ArrowLeft = document.getElementById("arrowLeft");
-const ArrowRight = document.getElementById("arrowRight");
-const MainContent = document.getElementById("SliderContent");
-let sliderIndex = 0;
-
 const dataArray = [
   {
     id: 1,
     imgUrl:
-      "https://images.pexels.com/photos/2325447/pexels-photo-2325447.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-    title: "image tite 1",
+      "https://media.istockphoto.com/id/814423752/photo/eye-of-model-with-colorful-art-make-up-close-up.jpg?s=612x612&w=0&k=20&c=l15OdMWjgCKycMMShP8UK94ELVlEGvt7GmB_esHWPYE=",
+    imgTitle: "Image Title 1",
   },
   {
     id: 2,
     imgUrl:
-      "https://thumbs.dreamstime.com/z/majestic-scene-beautiful-hot-air-balloon-drifting-over-marvellous-picturesque-landscape-unique-perspective-world-s-beauty-343696591.jpg",
-    title: "image title 2",
+      "https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
+    imgTitle: "Image Title 2",
   },
   {
     id: 3,
     imgUrl:
-      "https://images.pexels.com/photos/2325447/pexels-photo-2325447.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-    title: "image tite 3",
+      "https://media.istockphoto.com/id/814423752/photo/eye-of-model-with-colorful-art-make-up-close-up.jpg?s=612x612&w=0&k=20&c=l15OdMWjgCKycMMShP8UK94ELVlEGvt7GmB_esHWPYE=",
+    imgTitle: "Image Title 3",
   },
   {
     id: 4,
     imgUrl:
-      "https://thumbs.dreamstime.com/z/majestic-scene-beautiful-hot-air-balloon-drifting-over-marvellous-picturesque-landscape-unique-perspective-world-s-beauty-343696591.jpg",
-    title: "image tite 4",
+      "https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D",
+    imgTitle: "Image Title 4",
   },
 ];
+
+const arrowLeft = document.getElementById("arrowLeft");
+const arrowRight = document.getElementById("arrowRight");
+const MainContent = document.getElementById("sliderContent");
+const formEl = document.getElementById("formElement");
+let sliderIndex = 0;
+
 function DivTag() {
   const divEl = document.createElement("div");
   return divEl;
@@ -39,31 +41,22 @@ function ImgTag(item) {
   return tagEl;
 }
 function titleTag(item) {
-  const titleEl = document.createElement("h2");
-  titleEl.textContent = item.title;
-  return titleEl;
+  const TitleEl = document.createElement("h2");
+  TitleEl.textContent = item.imgTitle;
+  return TitleEl;
 }
+
 function setSlider() {
   MainContent.innerHTML = " ";
   const slideItem = DivTag();
-  const imgItem = ImgTag(dataArray[sliderIndex]);
+  const ImgItem = ImgTag(dataArray[sliderIndex]);
   const titleItem = titleTag(dataArray[sliderIndex]);
-
-  slideItem.appendChild(imgItem);
+  slideItem.appendChild(ImgItem);
   slideItem.appendChild(titleItem);
   MainContent.appendChild(slideItem);
 }
 setSlider();
 
-function LeftArrow() {
-  if (sliderIndex === 0) {
-    sliderIndex = dataArray.length - 1;
-    setSlider();
-    return;
-  }
-  sliderIndex--;
-  setSlider();
-}
 function RightArrow() {
   if (sliderIndex === dataArray.length - 1) {
     sliderIndex = 0;
@@ -73,63 +66,67 @@ function RightArrow() {
   sliderIndex++;
   setSlider();
 }
-ArrowLeft.addEventListener("click", LeftArrow);
-ArrowRight.addEventListener("click", RightArrow);
+function LeftArrow() {
+  if (sliderIndex === 0) {
+    sliderIndex = dataArray.length - 1;
+    setSlider();
+    return;
+  }
+  sliderIndex--;
+  setSlider();
+}
+arrowLeft.addEventListener("click", LeftArrow);
+arrowRight.addEventListener("click", RightArrow);
 
 setInterval(() => {
   RightArrow();
-}, 4000);
+}, 3000);
 
-const FormEl = document.getElementById("formElement");
-
-FormEl.addEventListener("submit", function (event) {
-  event.preventDefault();
+formEl.addEventListener("submit", function (e) {
+  e.preventDefault();
   let errors = {};
-  const UsernameValue = document.getElementById("UserNameField").value;
-  if (UsernameValue == "") {
-    errors.usernmae = "username Field Cannot be Empty";
+  const usernameValue = document.getElementById("usernameField").value;
+  if (usernameValue === "") {
+    errors.username = "username Field cannot be empty";
   }
-  const Password1 = document.getElementById("PasswordField").value;
-  const Password2 = document.getElementById("repeateyourField").value;
-  if (Password1 == "") {
-    errors.password = "password Field Cannot be Empty";
+  const pass1 = document.getElementById("passwordField").value;
+  const pass2 = document.getElementById("passwordField2").value;
+  if (pass1 === "") {
+    errors.password = "password field cannot be empty";
   }
-  if (Password1 !== Password2) {
-    errors.Password2 = "Passwords do not match";
+  if (pass1 !== pass2) {
+    errors.password2 = "Passwords do not match";
   }
   let gender = false;
-
   this.querySelectorAll('[name="gender"]').forEach((item) => {
     if (item.checked) {
       gender = true;
     }
   });
-  if (!gender) {
-    errors.gender = "please select your Gender";
+  if (gender === false) {
+    errors.gender = "please Select  your gender";
   }
-  const CheckBox = document.getElementById("agreeCheck").checked;
-  if (CheckBox === false) {
-    errors.check = "you must agree our conditions";
+  const CheckBox = document.getElementById("agreecheck").checked;
+  if (!CheckBox) {
+    errors.check = "you must agree our terms and conditions";
   }
   console.log(errors);
-
-  this.querySelectorAll(".errorText").forEach((el) => {
+  this.querySelectorAll(".error-text").forEach((el) => {
     el.textContent = " ";
   });
 
   for (let key in errors) {
     console.log(key);
-
-    let perrorElement = document.getElementById("errors-" + key);
-    console.log(perrorElement);
-    if (perrorElement) {
-      perrorElement.textContent = errors[key];
+    let pErrorElement = document.getElementById("error-" + key);
+    console.log(pErrorElement);
+    if (pErrorElement) {
+      pErrorElement.textContent = errors[key];
     }
   }
 });
-let errors = {
-  check: "you must agree our conditions",
-  gender: "please select your Gender",
-  password: "password Field Cannot be Empty",
-  usernmae: "username Field Cannot be Empty",
-};
+// let errors = {
+//   check: "you must agree our terms and conditions",
+//   gender: "please Select  your gender",
+//   password: "password field cannot be empty",
+//   username: "username Field cannot be empty",
+// };

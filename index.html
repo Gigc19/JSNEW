@@ -11,40 +11,44 @@
     <section>
       <form action="" id="formElement">
         <div>
-          <input type="text" name="usernmae" id="UserNameField" />
-          <p class="errorText" id="errors-usernmae"></p>
+          <input type="text" name="username" id="usernameField" />
+          <p class="error-text" id="error-username"></p>
         </div>
         <div>
-          <input type="password" name="password" id="PasswordField" />
-          <p class="errorText" id="errors-password"></p>
+          <input type="password" name="password" id="passwordField" />
+          <p class="error-text" id="error-password"></p>
         </div>
         <div>
-          <input type="password" name="repeatPaswword" id="repeateyourField" />
-          <p class="errorText" id="errors-repeatPaswword"></p>
+          <input
+            type="password"
+            name="password2"
+            id="passwordField2"
+            placeholder="repeat your password"
+          />
+          <p class="error-text" id="error-password2"></p>
         </div>
         <div>
           <input type="radio" name="gender" id="male" />
           <label for="">Male</label>
-          <input type="radio" name="gender" id="Female" />
-          <label for="">FeMale</label>
-          <p class="errorText" id="errors-gender"></p>
+          <input type="radio" name="gender" id="female" />
+          <label for="">Feale</label>
+          <p class="error-text" id="error-gender"></p>
         </div>
         <div>
-          <input type="checkbox" name="check" id="agreeCheck" />
+          <input type="checkbox" name="check" id="agreecheck" />
           <label for="">agree terms and conditions</label>
-          <p class="errorText" id="errors-check"></p>
+          <p class="error-text" id="error-check"></p>
         </div>
-        <button>submit</button>
+        <button>Submit</button>
       </form>
     </section>
     <section>
-      <div class="SliderWraper">
-        <button class="arrow left" id="arrowLeft"><</button>
-        <button class="arrow right" id="arrowRight">></button>
-        <div class="slider-Content" id="SliderContent"></div>
+      <div class="sliderWraper">
+        <button class="arrow arrowLeft" id="arrowLeft"><</button>
+        <button class="arrow arrowRight" id="arrowRight">></button>
+        <div class="sliderContent" id="sliderContent"></div>
       </div>
     </section>
-
     <script src="script.js"></script>
   </body>
 </html>
