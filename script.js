@@ -123,10 +123,42 @@ formEl.addEventListener("submit", function (e) {
       pErrorElement.textContent = errors[key];
     }
   }
+  if (Object.keys(errors).length === 0) {
+    this.submit();
+  }
 });
-// let errors = {
-//   check: "you must agree our terms and conditions",
-//   gender: "please Select  your gender",
-//   password: "password field cannot be empty",
-//   username: "username Field cannot be empty",
-// };
+
+const PaswwordEl = document.getElementById("passwordField");
+const icon = document.getElementById("toggleIcon");
+
+icon.addEventListener("click", function () {
+  if (PaswwordEl.type === "password") {
+    PaswwordEl.setAttribute("type", "text");
+    icon.classList.remove("fa-eye");
+    icon.classList.add("fa-eye-slash");
+  } else {
+    PaswwordEl.setAttribute("type", "password");
+    icon.classList.remove("fa-eye-slash");
+    icon.classList.add("fa-eye");
+  }
+});
+
+const emailEl = document.getElementById("email");
+
+function emailValidation() {
+  const emailValue = document.getElementById("email").value;
+  const ErrrEmail = document.getElementById("text-email");
+  let Emailpattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+  if (emailValue.match(Emailpattern)) {
+    ErrrEmail.textContent = "your email is valid";
+    ErrrEmail.style.color = "green";
+  } else {
+    ErrrEmail.textContent = "your email is invalid";
+    ErrrEmail.style.color = "red";
+  }
+  if (emailValue === "") {
+    ErrrEmail.textContent = "";
+  }
+}
+emailEl.addEventListener("keyup", emailValidation);
