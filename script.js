@@ -162,3 +162,82 @@ function emailValidation() {
   }
 }
 emailEl.addEventListener("keyup", emailValidation);
+
+const lotterpromise = new Promise((reslove, reject) => {
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      reslove();
+    } else {
+      reject();
+    }
+  }, 3000);
+});
+lotterpromise
+  .then(() => console.log("you win"))
+  .catch(() => console.log("you Lost"));
+
+const waitFnc = function (seconds) {
+  return new Promise(function (reslove) {
+    setTimeout(reslove, seconds * 1000);
+  });
+};
+waitFnc(2)
+  .then(() => {
+    console.log("2 second later");
+    return waitFnc(3);
+  })
+  .then(() => {
+    console.log("+ 3 seconds later");
+    return waitFnc(6);
+  })
+  .then(() => {
+    console.log("6 seconds later");
+    return;
+  });
+
+const waitFnc2 = function (seconds) {
+  return new Promise(function (reslove) {
+    setTimeout(reslove, seconds * 1000);
+  });
+};
+const imgContainer = document.querySelector(".image");
+let currentImg;
+
+const CreateImg = function (ImagePath) {
+  return new Promise(function (resolve, reject) {
+    const imgEl = document.createElement("img");
+    imgEl.src = ImagePath;
+    imgEl.addEventListener("load", function () {
+      imgContainer.appendChild(imgEl);
+      resolve(imgEl);
+    });
+    imgEl.addEventListener("error", function () {
+      reject("image not found");
+    });
+  });
+};
+CreateImg(
+  "https://media.istockphoto.com/id/814423752/photo/eye-of-model-with-colorful-art-make-up-close-up.jpg?s=612x612&w=0&k=20&c=l15OdMWjgCKycMMShP8UK94ELVlEGvt7GmB_esHWPYE="
+)
+  .then((image) => {
+    currentImg = image;
+    return waitFnc2(2);
+  })
+  .then(() => {
+    currentImg.style.display = "none";
+    return CreateImg(
+      "https://media.istockphoto.com/id/1317323736/photo/a-view-up-into-the-trees-direction-sky.jpg?s=612x612&w=0&k=20&c=i4HYO7xhao7CkGy7Zc_8XSNX_iqG0vAwNsrH1ERmw2Q="
+    );
+  })
+  .then((imagesecond) => {
+    currentImg = imagesecond;
+    return waitFnc2(3);
+  })
+  .then(() => {
+    currentImg.style.display = "none";
+  })
+  .catch((errorText) => {
+    let p = document.createElement("p");
+    p.textContent = "Image not found";
+    imgContainer.appendChild(p);
+  });
